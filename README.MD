@@ -74,24 +74,15 @@ if err != nil {
 app.Add(cgs.WithRouter(
 	router.WithRoute(router.Route{
 		Path: "/v1/books",
-		HandlerFuncs: map[string]router.HandlerFuncOperation{
-			http.MethodGet: {
-				Operation:   "list books",
-				HandlerFunc: h.List,
-			},
+		HandlerFuncs: map[string]http.HandlerFunc{
+			http.MethodGet: h.List,
 		},
 	}),
 	router.WithRoute(router.Route{
 		Path: "/v1/book",
-		HandlerFuncs: map[string]router.HandlerFuncOperation{
-			http.MethodGet: {
-				Operation:   "get book",
-				HandlerFunc: h.Get,
-			},
-			http.MethodPost: {
-				Operation:   "create book",
-				HandlerFunc: h.Create,
-			},
+		HandlerFuncs: map[string]http.HandlerFunc{
+			http.MethodGet: h.Get,
+			http.MethodPost: h.Create,
 		},
 	}),
 ))
@@ -107,29 +98,7 @@ So in addition to the routes provided by the default router, we will also have t
 - `/v1/book` which accepts either a `POST` or `GET` request.
 - `/v1/books` which accepts just `GET` requests.
 
-```go
-func NewRouter() cgs.Option {
-	return cgs.WithRouter(
-		router.WithRoute(router.Route{
-			Path: "/v1/transformer",
-			HandlerFuncs: map[string]router.HandlerFuncOperation{
-				http.MethodGet: {
-					Operation: "get transformer",
-					HandlerFunc: func(writer http.ResponseWriter, request *http.Request) {
-						writer.Write([]byte("Autobots, rollout"))
-					},
-				},
-			},
-		}),
-	)
-}
-```
-
 This can then be imported in the app with the following
-
-```go
-app.Add(transformer.NewRouter())
-```
 
 ## Extending functionality
 

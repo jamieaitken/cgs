@@ -16,14 +16,9 @@ type Router struct {
 	tracer          *requestid.Tracer
 }
 
-type HandlerFuncOperation struct {
-	Operation   string
-	HandlerFunc http.HandlerFunc
-}
-
 type Route struct {
 	Path         string
-	HandlerFuncs map[string]HandlerFuncOperation
+	HandlerFuncs map[string]http.HandlerFunc
 }
 
 type Option func(*Router)

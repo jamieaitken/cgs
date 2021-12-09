@@ -21,8 +21,8 @@ func WithTracer(opts ...requestid.Option) Option {
 func buildHandler(router *Router, route Route) http.Handler {
 	h := handlers.MethodHandler{}
 
-	for method, v := range route.HandlerFuncs {
-		h[method] = router.tracer.Trace(router.instrumentation.HandleFor(v.HandlerFunc))
+	for method, handler := range route.HandlerFuncs {
+		h[method] = router.tracer.Trace(router.instrumentation.HandleFor(handler))
 	}
 
 	return h

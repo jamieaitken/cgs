@@ -17,11 +17,9 @@ func TestNew(t *testing.T) {
 		{
 			givenOpts: []router.Option{router.WithRoute(router.Route{
 				Path: "/v1/music",
-				HandlerFuncs: map[string]router.HandlerFuncOperation{
-					http.MethodGet: {
-						HandlerFunc: func(writer http.ResponseWriter, request *http.Request) {
-							writer.WriteHeader(http.StatusOK)
-						},
+				HandlerFuncs: map[string]http.HandlerFunc{
+					http.MethodGet: func(writer http.ResponseWriter, request *http.Request) {
+						writer.WriteHeader(http.StatusOK)
 					},
 				},
 			})},
